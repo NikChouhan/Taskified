@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:taskified/consts/textstyle.dart';
 
@@ -18,25 +19,15 @@ class Home extends StatelessWidget {
         )),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: 50,
-            itemBuilder: (context, index){
-          return Container(
-            margin: const EdgeInsets.only(bottom: 6.0),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),
-            color: Colors.teal[50]),
-              child: ListTile(
-                title: Text("Task Heading",
-                  style: ourStyle(color: Colors.green[900], size: 20),
-                  ),
-                subtitle: Text("Task Description",
-                  style: ourStyle(color: Colors.lightBlue[30], size: 16),
-                ),
-                leading: Icon(Icons.check_box_rounded, size: 30,
-                              color: Colors.teal[700],),
-          ));
-        }),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("Tasks").snapshots(),
+          builder: (context, AsyncSnapshot snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child: CircularProgressIndicator(),);
+            }
+            return const Text("No data exist. Press the '+' button to add tasks!");
+          },
+        )
       )
     );
   }
