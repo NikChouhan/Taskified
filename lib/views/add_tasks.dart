@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:taskified/consts/textstyle.dart';
 
 class AddTask extends StatefulWidget {
-  const AddTask({Key? key}) : super(key: key);
+  const AddTask({super.key});
 
   @override
   State<AddTask> createState() => _AddTaskState();

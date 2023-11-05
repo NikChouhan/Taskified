@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:taskified/consts/textstyle.dart';
 import 'package:taskified/views/add_tasks.dart';
+import 'package:taskified/views/tasks.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  final fireStore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,22 +36,41 @@ class _HomeState extends State<Home> {
         body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection("Tasks").snapshots(),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                if(snapshot.hasData){
-                  
-                }
-                
-                return const Text(
-                    "No data exist. Press the '+' button to add tasks!");
-              },
-            )));
+                stream: fireStore.collection("tasks").snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  var dat = snapshot.data;
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return Container(
+                        margin: const EdgeInsets.all(10.0),
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: fireStore.collection('tasks').snapshots(),
+                            builder: (context, snapshot) {
+                              if (dat == null) {
+                                return const Text("No data");
+                              } else {
+                                return ListView(
+                                  children: dat!.docs
+                                      .map<Widget>((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return Container(
+                                        height: 60,
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15.0),
+                                        child: taskLayout(data['taskName'],
+                                            data['taskDesc']));
+                                  }).toList(),
+                                );
+                              }
+                            }));
+                  }
+                  return const Text(
+                      "No data exist. Press the '+' button to add tasks!");
+                })));
   }
 }
