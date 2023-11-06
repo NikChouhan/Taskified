@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
                   var dat = snapshot.data;
                   if (snapshot.hasData && snapshot.data != null) {
                     return Container(
-                        margin: const EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.only(top: 10),
                         child: StreamBuilder<QuerySnapshot>(
                             stream: fireStore.collection('tasks').snapshots(),
                             builder: (context, snapshot) {
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                                     return Container(
                                         height: 60,
                                         margin:
-                                            const EdgeInsets.only(bottom: 15.0),
+                                            const EdgeInsets.only(bottom: 1.0),
                                         child: taskLayout(data['taskName'],
                                             data['taskDesc']));
                                   }).toList(),
