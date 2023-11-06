@@ -24,7 +24,8 @@ ListTile taskLayout(String title, String taskDesc) {
     leading: ElevatedButton(
         onPressed: () {},
         child: toggle
-            ? Icon(Icons.check_box)
-            : Icon(Icons.check_box_outline_blank)),
+            // ignore: dead_code
+            ? const Icon(Icons.check_box)
+            : const Icon(Icons.check_box_outline_blank)),
   );
 }

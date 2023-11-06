@@ -19,11 +19,11 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AddTask()));
+                context, MaterialPageRoute(builder: (context) => const AddTask()));
           },
           backgroundColor: Colors.teal[50],
-          shape: CircleBorder(),
-          child: Icon(Icons.add),
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add),
         ),
         appBar: AppBar(
             backgroundColor: Colors.teal[200],

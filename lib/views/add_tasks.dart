@@ -44,32 +44,28 @@ class _AddTaskState extends State<AddTask> {
           padding: const EdgeInsets.all(6.0),
           child: Column(
             children: [
-              Container(
-                child: TextField(
-                  controller: titleCont,
-                  // ignore: prefer_const_constructors
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Enter the Title"),
+              TextField(
+                controller: titleCont,
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: "Enter the Title"),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              TextField(
+                controller: descCont,
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: "Enter the content",
                 ),
               ),
               const SizedBox(
                 height: 12,
               ),
-              Container(
-                child: TextField(
-                  controller: descCont,
-                  // ignore: prefer_const_constructors
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Enter the content",
-                  ),
-                ),
-              ),
               SizedBox(
-                height: 12,
-              ),
-              Container(
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
